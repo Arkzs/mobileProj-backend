@@ -9,7 +9,7 @@ router.post("/login", login);
 
 router.post("/register",singleUpload, register);
 
-router.post("/me", isAuthenticated, getMyProfile);
+router.get("/me", isAuthenticated, getMyProfile);
 
 router.post("/logout", isAuthenticated, logOut);
 
