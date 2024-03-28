@@ -2,7 +2,7 @@ import { asyncError } from "../middlewares/error.js";
 import { Order } from "../models/order.js";
 import { Product } from "../models/product.js";
 import ErrorHandler from "../utils/error.js";
-
+import { sendEmail } from "../utils/features.js";
 
 export const createOrder = asyncError(async (req, res, next) => {
     const {
@@ -34,6 +34,12 @@ export const createOrder = asyncError(async (req, res, next) => {
       await product.save();
     }
   
+    // Send email with order details
+  const subject = "Order Confirmation";
+  const to = req.user.email; // Assuming you have the user's email
+  const text = `Thank you for your order!\n\nOrder Details:\n${JSON.stringify(order, null, 2)}`; // You can format this as per your requirement
+  await sendEmail(subject, to, text);
+
     res.status(201).json({
       success: true,
       message: "Order Placed Successfully",
