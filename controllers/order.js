@@ -37,7 +37,7 @@ export const createOrder = asyncError(async (req, res, next) => {
     // Send email with order details
   const subject = "Order Confirmation";
   const to = req.user.email; // Assuming you have the user's email
-  const text = `Thank you for your order!\n\nOrder Details:\n${JSON.stringify(order, null, 2)}`; // You can format this as per your requirement
+  const text = `Thank you for your order!\n\nOrder Details:\n\nOrder ID: \n${shippingInfo}\n`;
   await sendEmail(subject, to, text);
 
     res.status(201).json({
